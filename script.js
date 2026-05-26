@@ -28,6 +28,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const startInput = document.getElementById('campaign-start');
     const endInput = document.getElementById('campaign-end');
 
+    // Initialize Flatpickr calendar on date inputs
+    const endPicker = flatpickr(endInput, {
+        dateFormat: "d-M-Y",
+        defaultDate: "04-Nov-2026",
+        onChange: calculate
+    });
+
+    const startPicker = flatpickr(startInput, {
+        dateFormat: "d-M-Y",
+        defaultDate: "08-May-2026",
+        onChange: function(selectedDates, dateStr) {
+            endPicker.set("minDate", dateStr);
+            calculate();
+        }
+    });
+
+    // Prevent selecting an end date before the start date initially
+    endPicker.set("minDate", "08-May-2026");
+
     function calculate() {
         const TR = parseFloat(trInput.value) || 0;
         const AOV = parseFloat(aovInput.value) || 1;
