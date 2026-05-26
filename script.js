@@ -58,9 +58,14 @@ document.addEventListener('DOMContentLoaded', () => {
         leadsFill.style.width = leadsPct + '%';
         customersFill.style.width = customersPct + '%';
         
-        // Update slider texts
+        // Update slider texts and filled track background dynamically adjusting for the 25px thumb
         lrrDisplay.textContent = lrrInput.value;
+        const lrrPct = (lrrInput.value - lrrInput.min) / (lrrInput.max - lrrInput.min);
+        lrrInput.style.background = `linear-gradient(to right, #fff calc(${lrrPct * 100}% + ${12.5 - lrrPct * 25}px), #3b4252 0)`;
+
         prrDisplay.textContent = prrInput.value;
+        const prrPct = (prrInput.value - prrInput.min) / (prrInput.max - prrInput.min);
+        prrInput.style.background = `linear-gradient(to right, #fff calc(${prrPct * 100}% + ${12.5 - prrPct * 25}px), #3b4252 0)`;
         
         updateChart(prospects, leads, customers);
     }
