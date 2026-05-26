@@ -6,7 +6,7 @@
 }
 
 body {
-    background-color: #16181d;
+    background-color: #131929;
     color: #e0e0e0;
     height: 100vh;
     padding: 20px;
@@ -22,7 +22,7 @@ body {
 
 /* Panels generic */
 .panel {
-    background-color: #21252f;
+    background-color: #191f2e;
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.3);
@@ -30,13 +30,14 @@ body {
 
 /* Sidebar */
 .sidebar {
-    width: 260px;
-    background-color: #21252f;
+    width: 290px;
+    height: 80%;
+    background-color: #191f2e;
     border-radius: 12px;
     padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 45px;
 }
 
 .logo {
@@ -55,8 +56,8 @@ body {
 
 .form-group label {
     font-size: 13px;
-    color: #a0a6b1;
-    font-weight: 500;
+    color: #fff;
+    font-weight: 600;
 }
 
 input, select {
@@ -66,8 +67,29 @@ input, select {
     padding: 10px;
     border-radius: 8px;
     font-size: 14px;
+    font-weight: 500;
     width: 100%;
     outline: none;
+}
+
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23a0a6b1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 15l5 5 5-5'/%3E%3Cpath d='M7 9l5-5 5 5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
+}
+
+/* Hide number input spinners (arrows) */
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+input[type="number"] {
+    -moz-appearance: textfield;
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
@@ -108,16 +130,24 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 /* Chart Panel */
 .chart-panel {
     flex: 1;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.chart-content {
+    flex: 1;
     position: relative;
     display: flex;
     flex-direction: column;
+    padding-left: 10px;
 }
 
 .chart-y-label {
     position: absolute;
-    left: -10px;
+    left: -20px;
     top: 50%;
-    transform: rotate(-90deg);
+    transform: translateY(-50%) rotate(-90deg);
     font-size: 12px;
     color: #a0a6b1;
 }
@@ -132,13 +162,18 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border-bottom: 1px solid #3b4252;
     margin-left: 15px;
     position: relative;
+    background-image: 
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 100% 16.666%, 16.666% 100%;
 }
 
 .chart-row {
     display: flex;
     align-items: center;
     position: relative;
-    height: 35px;
+    height: 100%; /* Better distribution to fill the area */
+    margin: 2px; /* Slightly larger gap so they breathe a bit */
 }
 
 .chart-row-label {
@@ -158,7 +193,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .bar {
     position: absolute;
-    height: 70%;
+    height: 88%; /* Slightly smaller than 96% */
     border-radius: 0 4px 4px 0;
     transition: width 0.3s ease;
 }
@@ -170,22 +205,25 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .chart-x-axis {
     display: flex;
     justify-content: space-between;
-    padding-left: 35px;
+    margin-left: 35px; /* Offset to match left axis */
     margin-top: 10px;
     font-size: 11px;
     color: #a0a6b1;
+    position: relative;
+    height: 15px; /* Give it physical height for absolute children */
 }
 
 .tooltip {
-    position: absolute;
-    background-color: rgba(43, 48, 60, 0.95);
-    border: 1px solid #4c566a;
+    position: fixed; /* Fix to window coordinates rather than absolute within container */
+    background-color: #636b7b;
+    border: 1px solid #7b8497;
     padding: 10px;
     border-radius: 6px;
-    font-size: 12px;
+    font-size: 11px;
+    line-height: 1.4;
     pointer-events: none;
     display: none;
-    z-index: 100;
+    z-index: 1000;
     box-shadow: 0 4px 6px rgba(0,0,0,0.3);
     color: #fff;
     white-space: nowrap;
@@ -211,19 +249,40 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 .stat-card:nth-child(1) { background-color: #636b7b; color: white; }
 .stat-card:nth-child(2) { background-color: #8790a3; color: white; }
-.stat-card:nth-child(3) { background-color: #cdd3df; color: #16181d; }
+.stat-card:nth-child(3) { background-color: #a4adbe; color: white; }
 
 .stat-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-weight: bold;
+}
+.stat-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #16181d;
+    font-size: 16px;
+    font-weight: 700;
+}
+.stat-percent {
+    font-size: 14px;
     font-weight: 500;
 }
-.stat-title kbd { font-family: sans-serif; background: transparent;}
+.stat-title svg {
+    background-color: rgba(0, 0, 0, 0.25);
+    padding: 6px;
+    border-radius: 6px;
+    box-sizing: content-box;
+    width: 16px;
+    height: 16px;
+    color: white;
+}
 
 .stat-value {
     font-size: 32px;
     font-weight: bold;
+    text-shadow: 0px 3px 6px rgba(0,0,0,0.3);
 }
 
 .progress-bar {
@@ -232,16 +291,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border-radius: 4px;
     overflow: hidden;
 }
-.stat-card:nth-child(3) .progress-bar {
-    background-color: rgba(0, 0, 0, 0.1);
-}
 
 .progress-bar .fill {
     height: 100%;
     background-color: #fff;
     border-radius: 4px;
 }
-.stat-card:nth-child(3) .progress-bar .fill { background-color: #16181d; }
 
 
 /* Sliders Panel */
@@ -260,22 +315,24 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .slider-header label {
     font-size: 14px;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .slider-value {
     text-align: right;
-    font-size: 12px;
-    color: #a0a6b1;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 500;
     margin-top: -5px;
 }
 
 input[type=range] {
     -webkit-appearance: none;
+    appearance: none;
     width: 100%;
     background: #3b4252;
-    height: 6px;
-    border-radius: 3px;
+    height: 8px; /* Slightly thicker */
+    border-radius: 10px; /* Fully rounded edges */
     outline: none;
     border: none;
 }
@@ -283,10 +340,21 @@ input[type=range] {
 input[type=range]::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
+    width: 25px; 
+    height: 25px;
+    border-radius: 50%; /* Perfect circle */
     background: #fff;
     cursor: pointer;
-    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.5); /* Neater shadow */
+    margin-top: -8px; /* Correctly center the thumb on the track */
+}
+
+input[type=range]::-moz-range-thumb {
+    width: 25px; 
+    height: 25px;
+    border-radius: 50%; /* Perfect circle */
+    background: #fff;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.5);
 }

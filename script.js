@@ -28,6 +28,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const startInput = document.getElementById('campaign-start');
     const endInput = document.getElementById('campaign-end');
 
+    // Initialize Flatpickr calendar on date inputs
+    const endPicker = flatpickr(endInput, {
+        dateFormat: "d-M-Y",
+        defaultDate: "04-Nov-2026",
+        onChange: calculate
+    });
+
+    const startPicker = flatpickr(startInput, {
+        dateFormat: "d-M-Y",
+        defaultDate: "08-May-2026",
+        onChange: function(selectedDates, dateStr) {
+            endPicker.set("minDate", dateStr);
+            calculate();
+        }
+    });
+
+    // Prevent selecting an end date before the start date initially
+    endPicker.set("minDate", "08-May-2026");
+
     function calculate() {
         const TR = parseFloat(trInput.value) || 0;
         const AOV = parseFloat(aovInput.value) || 1;
@@ -58,9 +77,14 @@ document.addEventListener('DOMContentLoaded', () => {
         leadsFill.style.width = leadsPct + '%';
         customersFill.style.width = customersPct + '%';
         
-        // Update slider texts
+        // Update slider texts and filled track background dynamically adjusting for the 25px thumb
         lrrDisplay.textContent = lrrInput.value;
+        const lrrPct = (lrrInput.value - lrrInput.min) / (lrrInput.max - lrrInput.min);
+        lrrInput.style.background = `linear-gradient(to right, #fff calc(${lrrPct * 100}% + ${12.5 - lrrPct * 25}px), #3b4252 0)`;
+
         prrDisplay.textContent = prrInput.value;
+        const prrPct = (prrInput.value - prrInput.min) / (prrInput.max - prrInput.min);
+        prrInput.style.background = `linear-gradient(to right, #fff calc(${prrPct * 100}% + ${12.5 - prrPct * 25}px), #3b4252 0)`;
         
         updateChart(prospects, leads, customers);
     }
@@ -82,6 +106,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const val = Math.round((totalProspects / steps) * i);
             const div = document.createElement('div');
             div.textContent = val + ' people';
+            div.style.position = 'absolute';
+            div.style.left = (i / steps * 100) + '%';
+            div.style.transform = 'translateX(-50%)';
             xAxisContainer.appendChild(div);
         }
 
@@ -139,8 +166,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function positionTooltip(e) {
         const x = e.clientX;
         const y = e.clientY;
-        tooltip.style.left = (x + 15) + 'px';
-        tooltip.style.top = (y - 15) + 'px';
+        tooltip.style.left = (x + 10) + 'px'; // Display right next to the mouse
+        tooltip.style.top = (y + 10) + 'px';
     }
 
     // Bind events
