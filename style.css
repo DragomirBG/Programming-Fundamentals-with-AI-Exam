@@ -6,7 +6,7 @@
 }
 
 body {
-    background-color: #16181d;
+    background-color: #131929;
     color: #e0e0e0;
     height: 100vh;
     padding: 20px;
@@ -22,7 +22,7 @@ body {
 
 /* Panels generic */
 .panel {
-    background-color: #21252f;
+    background-color: #191f2e;
     border-radius: 12px;
     padding: 20px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.3);
@@ -30,13 +30,14 @@ body {
 
 /* Sidebar */
 .sidebar {
-    width: 260px;
-    background-color: #21252f;
+    width: 290px;
+    height: 80%;
+    background-color: #191f2e;
     border-radius: 12px;
     padding: 20px;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 45px;
 }
 
 .logo {
