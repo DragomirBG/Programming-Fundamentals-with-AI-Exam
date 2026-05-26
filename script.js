@@ -82,6 +82,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const val = Math.round((totalProspects / steps) * i);
             const div = document.createElement('div');
             div.textContent = val + ' people';
+            div.style.position = 'absolute';
+            div.style.left = (i / steps * 100) + '%';
+            div.style.transform = 'translateX(-50%)';
             xAxisContainer.appendChild(div);
         }
 
@@ -139,8 +142,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function positionTooltip(e) {
         const x = e.clientX;
         const y = e.clientY;
-        tooltip.style.left = (x + 15) + 'px';
-        tooltip.style.top = (y - 15) + 'px';
+        tooltip.style.left = (x + 10) + 'px'; // Display right next to the mouse
+        tooltip.style.top = (y + 10) + 'px';
     }
 
     // Bind events
